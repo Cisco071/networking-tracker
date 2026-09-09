@@ -6,7 +6,7 @@ up. Every visitor gets their own account and their own list; nobody can see or
 change anyone else's contacts, enforced at the database level with Postgres
 Row Level Security, not just in the UI.
 
-**Live app:** `TODO — add the deployed Vercel URL here after deployment`
+**Live app:** https://networking-tracker-eta.vercel.app
 
 ## Table of contents
 
