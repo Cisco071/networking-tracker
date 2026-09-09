@@ -254,30 +254,84 @@ Sample output:
 
 ## Grading evidence
 
-All flows below were manually verified end-to-end against the real Neon
-project during development (sign-up/in/out, add/edit/delete, refresh
-persistence, invalid-input rejection, and two-account isolation all pass).
+All screenshots below were captured against the live Vercel deployment,
+using dedicated test accounts (`account-a@example.com`, `account-b2@example.com`)
+rather than a real user's account, so no personal data appears in this
+public repo.
 
-> TODO — replace the checkmarks below with real screenshots (or a short
-> recording) and the actual command output, captured against the live
-> Vercel deployment for final submission.
+### Automated test output
 
-- [x] **Automated test output** showing the Vitest suite passing (see
-      [Testing](#testing) for the command; paste real terminal output here).
-- [x] **Sign-in and sign-out** screenshot or recording.
-- [x] **Create, edit, delete, and refresh** a contact — screenshot or
-      recording showing the data survives a browser refresh.
-- [x] **Two-account privacy test**: sign up two separate accounts (e.g. in a
-      normal window and a private window), add a contact under Account A,
-      then sign in as Account B and show its contacts list is empty / does
-      not include Account A's contact. Screenshot both views.
-- [x] **Invalid input failing safely**: screenshot of submitting an empty
-      name or an invalid priority and seeing the inline error message
-      (both are additionally blocked server-side by the `CHECK` constraints
-      in `sql/schema.sql`).
-- [ ] Confirm no real secret values are committed anywhere in this repo's
-      git history (`git log -p -- .env.local` should return nothing, since
-      `.env.local` is gitignored and was never committed).
+```
+> networking-tracker@0.1.0 test
+> vitest run
+
+ RUN  v4.1.11 /networking-tracker
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  19:57:46
+   Duration  77ms (transform 12ms, setup 0ms, import 17ms, tests 2ms, environment 0ms)
+```
+
+All 8 cases in [lib/validate-contact.test.ts](lib/validate-contact.test.ts) pass —
+see [Testing](#testing) for what each one checks.
+
+### Sign in and sign out
+
+Signed in as `account-a@example.com`:
+
+![Signed in](docs/screenshots/01-signed-in.png)
+
+Signed out, back at the sign-in page:
+
+![Signed out](docs/screenshots/07-signed-out.png)
+
+### Create, edit, and persist across refresh
+
+Adding a contact:
+
+![Add contact dialog](docs/screenshots/02-add-contact-dialog.png)
+
+Contact created:
+
+![Contact created](docs/screenshots/03-contact-created.png)
+
+Same contact, after a browser refresh — confirms it's stored in Postgres,
+not local state:
+
+![After refresh](docs/screenshots/04-after-refresh.png)
+
+Editing the contact:
+
+![Edit contact](docs/screenshots/05-edit-contact.png)
+
+### Invalid input fails safely
+
+Submitting with an empty name shows a clear inline error instead of a raw
+error or silent failure:
+
+![Invalid input](docs/screenshots/06-invalid-input.png)
+
+### Two-account privacy test
+
+Account A has a contact (see "Contact created" above). Signed in as
+Account B (`account-b2@example.com`) instead — its list is empty, proving
+RLS scopes every row to its owner rather than the UI just filtering client-side:
+
+![Account B sees no contacts](docs/screenshots/08-account-b-empty.png)
+
+### No committed secrets
+
+```
+$ git log --all --full-history -- .env.local .env
+(no output — these files were never committed)
+
+$ git ls-files | grep -E "^\.env"
+.env.example
+```
+
+`.env.local` (the file holding real Neon URLs locally) has never been
+committed; only the placeholder-only `.env.example` is tracked.
 
 ## Known limitations and next steps
 
