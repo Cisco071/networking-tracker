@@ -33,6 +33,7 @@ Row Level Security, not just in the UI.
 ## Features
 
 - Sign up, sign in, and sign out with Neon Managed Better Auth.
+- Password reset via emailed link ("Forgot password?" on the sign-in page).
 - Add a contact with name, company, role, where you met them, notes, and a
   priority (`high` / `medium` / `low` only).
 - View your contacts in a sortable table (desktop) or card list (mobile).
@@ -280,9 +281,9 @@ persistence, invalid-input rejection, and two-account isolation all pass).
 
 ## Known limitations and next steps
 
-- No password reset / email verification flow — Better Auth supports both,
-  but they're out of scope for this assignment's smallest-complete-version
-  goal.
+- No email verification flow — Better Auth supports it, but it's out of
+  scope for this assignment's smallest-complete-version goal. (Password
+  reset via emailed link *is* implemented — see Features above.)
 - No pagination — fine for a personal contact list, but would need to be
   added (`limit`/`range` on the Data API query) if this were extended to
   very large lists.
