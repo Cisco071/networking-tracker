@@ -283,12 +283,6 @@ persistence, invalid-input rejection, and two-account isolation all pass).
 - No password reset / email verification flow — Better Auth supports both,
   but they're out of scope for this assignment's smallest-complete-version
   goal.
-- **Free-tier cold start**: Neon's free-tier compute suspends after a period
-  of inactivity. The very first sign-in/sign-up request after idle time can
-  occasionally fail with "Could not reach the authentication service" while
-  the database wakes up — retrying a few seconds later always succeeds. This
-  is expected serverless behavior, not an application bug; it would not
-  occur on a paid Neon plan with an always-on compute.
 - No pagination — fine for a personal contact list, but would need to be
   added (`limit`/`range` on the Data API query) if this were extended to
   very large lists.

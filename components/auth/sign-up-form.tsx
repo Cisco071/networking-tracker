@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { neon } from "@/lib/neon-client";
+import { getAuthErrorMessage } from "@/lib/auth-error";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -34,8 +35,13 @@ export function SignUpForm() {
         return;
       }
       router.push("/contacts");
-    } catch {
-      setError("Could not reach the authentication service. Please try again.");
+    } catch (err) {
+      setError(
+        getAuthErrorMessage(
+          err,
+          "Could not reach the authentication service. Please try again.",
+        ),
+      );
     } finally {
       setSubmitting(false);
     }
