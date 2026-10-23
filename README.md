@@ -25,10 +25,9 @@ Row Level Security, not just in the UI.
 
 ## Screenshots / walkthrough
 
-> TODO — replace with real screenshots or a short screen recording taken
-> against the live, deployed app once Neon + Vercel are wired up. Suggested
-> shots: landing page, sign-up, the contacts table (desktop), the contacts
-> card view (mobile), the add/edit dialog, and the delete confirmation.
+Screenshots of the live app (sign-in/out, add and edit dialogs, persistence
+across refresh, validation errors, and the two-account privacy test) are in
+[Grading evidence](#grading-evidence) below.
 
 ## Features
 
